@@ -1,6 +1,6 @@
 from django.db import models
 
-from base.models import Work, Chapter
+from fanfic.models import Work, Chapter
 from django.contrib.auth.models import User
 from django.contrib.auth.models import AbstractUser
 
@@ -21,8 +21,8 @@ class Profile(models.Model):
    
    coins = models.IntegerField(default=0)
    
-   updated_at = models.DateTimeField(auto_now_add=True)
-   created_at = models.DateTimeField(auto_now=True)
+   updated = models.DateTimeField(auto_now_add=True)
+   created = models.DateTimeField(auto_now=True)
    
    def __str__(self):
       return self.user.username

@@ -7,7 +7,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     
     path('api/', include('fanfic.urls')),
-    path('api/auth/', include('user.urls')),
+    path('api/', include('user.urls')),
     path('api/info/', include('base.urls')),
 ]
 

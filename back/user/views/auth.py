@@ -11,10 +11,14 @@ from django.contrib.auth import authenticate, login, logout
 from rest_framework_simplejwt.tokens import RefreshToken
 
 from ..validation import validate_email, validate_username
-from ..services import authenticate
+from ..utils import authenticate, auth_check
 
 from ..models import Profile
 
+   
+# ! /sign-up
+# TODO: Sign Up
+# * public
 @api_view(['POST'])
 def sign_up_view(request):
    username = validate_username(request.data['username'])
@@ -38,6 +42,9 @@ def sign_up_view(request):
       'token': token,
       }, status=HTTP_201_CREATED)
    
+# ! /sign-in
+# TODO: Sign In
+# * public
 @api_view(['POST'])
 def sign_in_view(request):
    email = request.data.get('email')
@@ -49,13 +56,25 @@ def sign_in_view(request):
       
       refresh = RefreshToken.for_user(user)
       
-      refresh_token = str(refresh)
-      token = str(refresh.access_token)
+      # refresh_token = str(refresh)
+      access_token = str(refresh.access_token)
    
       return Response({
-         'refresh_token': refresh_token,
-         'token': token
+         # 'refresh_token': refresh_token,
+         'access_token': access_token
          }, status=HTTP_200_OK)
    else:
       return Response({'message': 'user not found'}, 
          status=HTTP_401_UNAUTHORIZED)
+      
+# ! /sign-out
+# TODO: Sign Out
+# * private
+@api_view(['POST'])
+def sign_out_view(request):
+   user = auth_check(request)
+   print('______________________', user)
+   
+   # user.logout()
+   return Response({'message': 'logout successful'}, 
+                   status=HTTP_200_OK)

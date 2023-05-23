@@ -10,9 +10,9 @@
 
 ## Auth
 
-- [ ]  registration / login
+- [x]  registration / login
 - [ ]  account confirmation with email
-- [ ]  reset password
+- [ ]  reset password with send email
 
 ## Profile
 
@@ -47,11 +47,11 @@
 
 ## Categories
 
-- [ ]  **Tag**
-    - [ ]  add new tag
-    - [ ]  show all tags
-    - [ ]  show one tag with works
-    - [ ]  remove tag
+- [x]  **Tag**
+    - [x]  add new tag
+    - [x]  show all tags
+    - [x]  show one tag with works
+    - [x]  remove tag
 - [ ]  **Fandom**
     - [ ]  add new fandom
     - [ ]  show all fandoms
@@ -100,8 +100,11 @@
 
 ## News
 
-- [ ]  show all news
-- [ ]  show one news
-- [ ]  add new news
-- [ ]  remove news
-- [ ]  about
+- [x]  show all news
+- [x]  show one news
+- [x]  add new news
+- [x]  remove news
+- [x]  about
+- [x]  faq
+- [x]  privacy police
+- [x]  work rools

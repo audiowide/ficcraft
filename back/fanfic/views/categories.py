@@ -5,7 +5,11 @@ from rest_framework.generics import (ListCreateAPIView,
 from rest_framework.permissions import IsAdminUser, IsAuthenticated
 from base.utils import AdminPermission, CreateOnlyPermission
 
-from ..serializers import TagSerializer
+from ..serializers import (TagSerializer, 
+                           FandomSerializer, 
+                           CharacterSerializer, 
+                           PairingSerializer, 
+                           WorkSerializer)
 from ..services import all_tags_service
 
 

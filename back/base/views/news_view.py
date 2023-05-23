@@ -2,7 +2,7 @@ from rest_framework.generics import ( ListCreateAPIView, RetrieveUpdateDestroyAP
 
 from ..serializers import  NewsSerializer
 from ..services import all_news_service
-
+from ..utils import CreateOnlyPermission, AdminPermission
 
 #! /news
 # TODO: Create, Show All
@@ -10,6 +10,7 @@ from ..services import all_news_service
 class NewsListView(ListCreateAPIView):
    queryset = all_news_service()
    serializer_class = NewsSerializer
+   permission_classes =  [AdminPermission]
 
 #! /news/:id
 # TODO:  Show, Update, Delete
@@ -17,3 +18,5 @@ class NewsListView(ListCreateAPIView):
 class NewsDetailView(RetrieveUpdateDestroyAPIView):
    queryset = all_news_service()
    serializer_class = NewsSerializer
+   permission_classes =  [AdminPermission]
+   

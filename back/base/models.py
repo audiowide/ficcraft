@@ -2,7 +2,7 @@ from django.db import models
 
 # Create your models here.
 class About(models.Model):
-   text = models.TextField(max_length='5000', blank=True)
+   text = models.TextField(blank=True)
    
    def  __str__(self):
       return self.text

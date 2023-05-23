@@ -3,12 +3,15 @@ from rest_framework.decorators import api_view
 from rest_framework.status import (HTTP_404_NOT_FOUND, 
                                    HTTP_200_OK, 
                                    HTTP_201_CREATED, 
-                                   HTTP_204_NO_CONTENT)
+                                   HTTP_204_NO_CONTENT, 
+                                   HTTP_403_FORBIDDEN, 
+                                   HTTP_401_UNAUTHORIZED)
 from rest_framework.generics import (CreateAPIView, 
                                      RetrieveUpdateAPIView, 
                                      ListCreateAPIView,
                                      RetrieveUpdateDestroyAPIView
                                      )
+from rest_framework.permissions import IsAdminUser
 
 from ..models import About
 from ..serializers import (AboutSerializer, 
@@ -17,46 +20,26 @@ from ..serializers import (AboutSerializer,
                            PrivatyPoliceSerializer)
 from ..services import (all_fanfic_rools_service,
                         all_faq_service, 
-                        all_privaty_police_service)
-
+                        all_privaty_police_service,
+                        all_about_service)
+from ..utils import CreateOnlyPermission, AdminPermission
 
 # ! /about
-# TODO: Create About
-# * private(create, update, delete) 
-@api_view(['POST'])
-def aboutCreateView(request):
-   about = About.objects.create(
-      text=request.data['text'],
-   )
+# TODO: Create
+# * private
+class AboutListView(ListCreateAPIView):
+   queryset = all_about_service()
+   serializer_class = AboutSerializer
+   permission_classes =  [IsAdminUser]
    
-   return Response(AboutSerializer(about, many=False).data, 
-                   status=HTTP_201_CREATED)
+# ! /about:id
+# TODO: Show, Update
+# * public(show), private(update)
+class AboutDetailView(RetrieveUpdateAPIView):
+   queryset = all_about_service()
+   serializer_class = AboutSerializer
+   permission_classes =  [AdminPermission]
 
-# ! /about/:id
-# TODO: Get and Update about
-# * public(GET), private(PUT)
-@api_view(['GET', 'PUT'])
-def aboutDetailView(request, pk):   
-   try:
-      about = About.objects.get(id=pk)
-      
-      if request.method == 'GET':
-         return Response(AboutSerializer(about, many=False).data, 
-                         status=HTTP_200_OK)
-      
-      if request.method == 'PUT':
-         if about.text != request.data['text']:
-            about.text = request.data['text']
-         else:
-            return Response({'message': "Text doesn't changed"}, 
-                            status=HTTP_204_NO_CONTENT)
-            
-         about.save()
-         return Response(AboutSerializer(about, many=False).data, 
-                         status=HTTP_201_CREATED)
-   except:
-      return Response({'message': 'About not found'}, 
-                      status=HTTP_404_NOT_FOUND)
       
 # ! /fanfic-rool
 # TODO: Create
@@ -64,6 +47,7 @@ def aboutDetailView(request, pk):
 class FanficRoolListView(CreateAPIView):
    queryset = all_fanfic_rools_service()
    serializer_class = FanficRoolSerializer
+   permission_classes =  [IsAdminUser]
 
 # ! /fanfic-rool/:id
 # TODO:  Show, Update
@@ -71,6 +55,7 @@ class FanficRoolListView(CreateAPIView):
 class FanficRoolDetailView(RetrieveUpdateAPIView):
    queryset = all_fanfic_rools_service()
    serializer_class = FanficRoolSerializer
+   permission_classes =  [AdminPermission]
    
 # ! /faq
 # TODO: Create
@@ -78,6 +63,7 @@ class FanficRoolDetailView(RetrieveUpdateAPIView):
 class FaqListCreateAPIView(ListCreateAPIView):
    queryset = all_faq_service()
    serializer_class = FaqSerializer
+   permission_classes =  [IsAdminUser ]
 
 # ! /faq/:id
 # TODO:  Update, Delete, Get
@@ -85,6 +71,7 @@ class FaqListCreateAPIView(ListCreateAPIView):
 class FaqDetailView(RetrieveUpdateDestroyAPIView):
    queryset = all_faq_service()
    serializer_class = FaqSerializer
+   permission_classes =  [AdminPermission]
    
 # ! /private-policy
 # TODO: Create
@@ -92,6 +79,7 @@ class FaqDetailView(RetrieveUpdateDestroyAPIView):
 class PrivatyPoliceListView(CreateAPIView):
    queryset = all_privaty_police_service()
    serializer_class = PrivatyPoliceSerializer
+   permission_classes =  [IsAdminUser]
 
 # ! /private-policy/:id
 # TODO:  Show, Update
@@ -99,3 +87,4 @@ class PrivatyPoliceListView(CreateAPIView):
 class PrivatyPoliceDetailView(RetrieveUpdateAPIView):
    queryset = all_privaty_police_service()
    serializer_class = PrivatyPoliceSerializer
+   permission_classes =  [AdminPermission]

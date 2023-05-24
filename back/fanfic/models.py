@@ -22,7 +22,7 @@ class Fandom(models.Model):
    )
    name = models.CharField(max_length=500)
    type = models.CharField(max_length=100, blank=True, choices=TYPES)
-   description = models.TextField(max_length=500)
+   description = models.TextField(max_length=500, blank=True)
    
    def __str__(self):
       return self.name

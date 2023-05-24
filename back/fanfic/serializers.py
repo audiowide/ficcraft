@@ -14,11 +14,15 @@ class FandomSerializer(ModelSerializer):
       fields = ('id', 'name', 'type', 'description')
       
 class CharacterSerializer(ModelSerializer):
+   fandom = FandomSerializer()
+   
    class Meta:
       model = Character
       fields = ('id', 'name', 'description', 'fandom')
       
 class PairingSerializer(ModelSerializer):
+   characters = CharacterSerializer()
+   
    class Meta:
       model = Pairing
       fields = ('id', 'characters')

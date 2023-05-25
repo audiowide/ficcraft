@@ -12,11 +12,13 @@ from ..serializers import (TagSerializer,
                            FandomSerializer, 
                            CharacterSerializer, 
                            PairingSerializer, 
+                           CreatePairingSerializer,
                            WorkSerializer, 
                            CreateCharacterSerializer)
 from ..services import (all_tags_service, 
                         all_fandoms_service, 
-                        all_characters_service)
+                        all_characters_service, 
+                        all_pairings_service)
 
 
 # ! /tags
@@ -80,4 +82,30 @@ class CharacterDetailView(RetrieveUpdateDestroyAPIView):
    def get_serializer_class(self):
       if self.request.method == 'PUT':
          return  CreateCharacterSerializer
+      return super().get_serializer_class()
+   
+# ! /pairings
+# TODO: Show All and Create
+# * public(show all), private(create)
+class PairingListCreateView(ListCreateAPIView):
+   queryset = all_pairings_service()
+   serializer_class = PairingSerializer
+   permission_classes =  [CreateOnlyPermission]
+   
+   def get_serializer_class(self):
+      if self.request.method == 'POST':
+         return  CreatePairingSerializer
+      return super().get_serializer_class()
+   
+# ! /pairings/:id
+# TODO: Show One, Update, Destroy
+# * public(show one), private(update, destroy)
+class PairingDetailView(RetrieveUpdateDestroyAPIView):
+   queryset = all_pairings_service()
+   serializer_class = PairingSerializer
+   permission_classes =  [CreateOnlyPermission]
+   
+   def get_serializer_class(self):
+      if self.request.method == 'PUT':
+         return  CreatePairingSerializer
       return super().get_serializer_class()

@@ -8,3 +8,6 @@ def all_fandoms_service():
 
 def all_characters_service():
    return Character.objects.all()
+
+def all_pairings_service():
+   return Pairing.objects.all()

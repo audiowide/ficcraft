@@ -2,17 +2,19 @@ from rest_framework.serializers import ModelSerializer
 from .models import Tag, Fandom, Character, Pairing, Work, WorkComment, Chapter, ChapterComment
 from user.serializers import UserSerializer
 
-
+# Tag
 class TagSerializer(ModelSerializer):
    class  Meta:
       model = Tag
       fields = ('id' ,'name', 'description', )
       
+# Fandom
 class FandomSerializer(ModelSerializer):
    class Meta:
       model = Fandom
       fields = ('id', 'name', 'type', 'description')
-      
+    
+# Character   
 class CharacterSerializer(ModelSerializer):
    fandom = FandomSerializer()
    
@@ -25,13 +27,25 @@ class CreateCharacterSerializer(ModelSerializer):
       model = Character
       fields = ('id', 'name', 'fandom','description')
       
+# Pairing  
+class PairingCharacterSerializer(ModelSerializer):
+   class Meta:
+      model = Character
+      fields = ('id', 'name')
+      
 class PairingSerializer(ModelSerializer):
-   characters = CharacterSerializer(many=False)
+   characters = PairingCharacterSerializer(many=True)
    
    class Meta:
       model = Pairing
       fields = ('id', 'characters')
       
+class CreatePairingSerializer(ModelSerializer):
+   class Meta:
+      model = Pairing
+      fields = ('id', 'characters')
+      
+# Work
 class WorkSerializer(ModelSerializer):
    tags = TagSerializer(many=True)
    user = UserSerializer(many=False)

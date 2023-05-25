@@ -13,4 +13,8 @@ urlpatterns = [
     # ?  characters
    path('characters', categories.CharacterListCreateView.as_view()),
    path('characters/<int:pk>/', categories.CharacterDetailView.as_view()),
+   
+   # ?  pairings
+   path('pairings', categories.PairingListCreateView.as_view()),
+   path('pairings/<int:pk>/', categories.PairingDetailView.as_view()),
 ]

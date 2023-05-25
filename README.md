@@ -53,17 +53,19 @@
     - [x]  show one tag with works
     - [x]  remove tag
 - [ ]  **Fandom**
-    - [ ]  add new fandom
-    - [ ]  show all fandoms
+    - [x]  add new fandom
+    - [x]  show all fandoms
     - [ ]  add to bookmark
     - [ ]  show one fandom with all works and paginator and filters
-    - [ ]  remove fandom
+    - [x]  update fandom
+    - [x]  remove fandom
 - [ ]  **Character**
-    - [ ]  add new character
-    - [ ]  show all
+    - [x]  add new character
+    - [x]  show all
     - [ ]  add to bookmark
     - [ ]  show one with all works and paginator and filters
-    - [ ]  remove
+    - [x]  remove
+    - [x]  update
 - [ ]  **Pairing**
     - [ ]  add new pairing
     - [ ]  show all parings

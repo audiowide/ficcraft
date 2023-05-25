@@ -1,7 +1,10 @@
 from rest_framework.decorators import api_view
 from rest_framework.generics import (ListCreateAPIView,
-                                     RetrieveUpdateDestroyAPIView
-                                     )
+                                     RetrieveUpdateDestroyAPIView,
+                                     CreateAPIView, 
+                                     ListAPIView, 
+                                     RetrieveDestroyAPIView,
+                                     UpdateAPIView)
 from rest_framework.permissions import IsAdminUser, IsAuthenticated
 from base.utils import AdminPermission, CreateOnlyPermission
 
@@ -9,7 +12,8 @@ from ..serializers import (TagSerializer,
                            FandomSerializer, 
                            CharacterSerializer, 
                            PairingSerializer, 
-                           WorkSerializer)
+                           WorkSerializer, 
+                           CreateCharacterSerializer)
 from ..services import (all_tags_service, 
                         all_fandoms_service, 
                         all_characters_service)
@@ -47,6 +51,11 @@ class FandomDetailView(RetrieveUpdateDestroyAPIView):
    serializer_class = FandomSerializer
    permission_classes =  [CreateOnlyPermission]
    
+   def get_queryset(self):
+      fandom_slug = self.kwargs['fandom_slug']
+      queryset = Fandom.objects.filter(tags__name=tag_name)
+      return queryset
+   
 # ! /characters
 # TODO: Show All and Create
 # * public(show all), private(create)
@@ -55,6 +64,11 @@ class CharacterListCreateView(ListCreateAPIView):
    serializer_class = CharacterSerializer
    permission_classes =  [CreateOnlyPermission]
    
+   def get_serializer_class(self):
+      if self.request.method == 'POST':
+         return  CreateCharacterSerializer
+      return super().get_serializer_class()
+   
 # ! /characters/:id
 # TODO: Show One, Update, Destroy
 # * public(show one), private(update, destroy)
@@ -62,3 +76,8 @@ class CharacterDetailView(RetrieveUpdateDestroyAPIView):
    queryset = all_characters_service()
    serializer_class = CharacterSerializer
    permission_classes =  [CreateOnlyPermission]
+   
+   def get_serializer_class(self):
+      if self.request.method == 'PUT':
+         return  CreateCharacterSerializer
+      return super().get_serializer_class()

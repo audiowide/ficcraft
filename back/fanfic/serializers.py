@@ -18,10 +18,15 @@ class CharacterSerializer(ModelSerializer):
    
    class Meta:
       model = Character
-      fields = ('id', 'name', 'description', 'fandom')
+      fields = ('id', 'name', 'fandom','description')
+      
+class CreateCharacterSerializer(ModelSerializer):
+   class Meta:
+      model = Character
+      fields = ('id', 'name', 'fandom','description')
       
 class PairingSerializer(ModelSerializer):
-   characters = CharacterSerializer()
+   characters = CharacterSerializer(many=False)
    
    class Meta:
       model = Pairing

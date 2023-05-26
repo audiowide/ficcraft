@@ -116,6 +116,7 @@ class Chapter(models.Model):
    after_text = models.TextField(max_length=1000)
    
    public = models.BooleanField(default=False)
+   place = models.IntegerField(default=0)
    
    created = models.DateTimeField(auto_now_add=True)
    updated = models.DateTimeField(auto_now=True)

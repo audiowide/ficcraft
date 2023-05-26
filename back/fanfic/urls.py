@@ -25,4 +25,9 @@ urlpatterns = [
    # path('works', works.WorkCreateView.as_view()),
    path('works/<str:slug>/', works.show_one_work),
    # path('works/<str:slug>/', works.WorksDetailView.as_view()),
+   
+   # ? chapters
+   path('works/<str:slug>/chapters', works.chapters_view),
+   path('works/<str:slug>/chapters/<int:pk>', works.chapter_view),
+   path('works/<str:slug>/chapters/<int:pk>/place-edit', works.chapter_place_view),
 ]

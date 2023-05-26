@@ -81,7 +81,7 @@ class ChapterSerializer(ModelSerializer):
       model = Chapter
       fields =  ('id', 'title', 
                  'user', 'work', 
-                 'pre_text', 'text', 'after_text', 
+                 'pre_text', 'text', 'after_text','place', 
                  'public', 'created', 'updated')
 
 class WorkCommentSerializer(ModelSerializer):

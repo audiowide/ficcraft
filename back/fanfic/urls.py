@@ -1,5 +1,7 @@
 from django.urls import path
+
 from .views import categories
+from .views import works
 
 urlpatterns = [
    # ?  tags
@@ -17,4 +19,10 @@ urlpatterns = [
    # ?  pairings
    path('pairings', categories.PairingListCreateView.as_view()),
    path('pairings/<int:pk>/', categories.PairingDetailView.as_view()),
+   
+   # ? works
+   path('works', works.show_all_works),
+   # path('works', works.WorkCreateView.as_view()),
+   path('works/<str:slug>/', works.show_one_work),
+   # path('works/<str:slug>/', works.WorksDetailView.as_view()),
 ]

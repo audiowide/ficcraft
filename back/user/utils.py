@@ -29,7 +29,7 @@ def auth_check(request):
          
          return ['success', id]
       except:
-         return ['error', 'Token incorrect']  
+         return ['error', 'Token incorrect', 403]  
    else:
-      return ['error', 'Token not found']
+      return ['error', 'Token not found', 401]
    

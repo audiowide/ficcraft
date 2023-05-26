@@ -14,7 +14,7 @@ from rest_framework_simplejwt.tokens import AccessToken
 from django.contrib.auth.hashers import make_password
 
 from ..validation import validate_email, validate_username
-from ..utils import authenticate, auth_check
+from ..utils import authenticate
 
 from ..models import Profile
 

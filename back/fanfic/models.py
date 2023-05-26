@@ -33,13 +33,18 @@ class Character(models.Model):
    description = models.TextField(max_length=500, blank=True)
    
    def __str__(self):
-      return name
+      return self.name
    
 class Pairing(models.Model):
    characters = models.ManyToManyField(Character, default=[])
    
    def __str__(self):
-      return self.id
+      character_names = self.characters.values_list('name', flat=True)
+      return '/'.join(character_names)
+   
+   def pairing(self):
+      character_names = self.characters.values_list('name', flat=True)
+      return '/'.join(character_names)
    
 class Work(models.Model):
    AUTHORTYPE = (
@@ -75,13 +80,12 @@ class Work(models.Model):
    
    title = models.CharField(max_length=300)
    slug = models.CharField(max_length=300, unique=True)
-   image = models.ImageField(upload_to='images/', 
-                             default='https://images.pexels.com/photos/16037832/pexels-photo-16037832.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1')
+   image = models.ImageField(upload_to='images/', default='book.jpeg')
    user = models.ForeignKey(User, on_delete=models.CASCADE)
    workType = models.CharField(max_length=100, choices=AUTHORTYPE, default='Work of my authorship')
    fanfic_type = models.CharField(max_length=100, choices=FANFICTYPE,  default='Original')
    
-   fandom = models.ManyToManyField(Fandom, blank=True)
+   fandoms = models.ManyToManyField(Fandom, blank=True)
    characters = models.ManyToManyField(Character, blank=True)
    pairings = models.ManyToManyField(Pairing, blank=True)
    
@@ -90,7 +94,7 @@ class Work(models.Model):
    
    tags = models.ManyToManyField(Tag, default=[])
    
-   description = models.TextField(blank=True, max_length=500)
+   description = models.TextField(blank=True, max_length=1000)
    notes = models.TextField(blank=True, max_length=1000)
    
    progressType = models.CharField(max_length=20, choices=TYPE, default='In progress')
@@ -104,6 +108,7 @@ class Work(models.Model):
    
 class Chapter(models.Model):
    user = models.ForeignKey(User, on_delete=models.CASCADE)
+   work = models.ForeignKey(Work, on_delete=models.CASCADE, default='')
    title = models.CharField(max_length=300)
    
    pre_text = models.TextField(max_length=1000)

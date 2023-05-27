@@ -1,7 +1,8 @@
 from django.urls import path
 
-from .views import categories
-from .views import works
+from .views import (categories, 
+                    works, 
+                    comments)
 
 urlpatterns = [
    # ?  tags
@@ -30,4 +31,9 @@ urlpatterns = [
    path('works/<str:slug>/chapters', works.chapters_view),
    path('works/<str:slug>/chapters/<int:pk>', works.chapter_view),
    path('works/<str:slug>/chapters/<int:pk>/place-edit', works.chapter_place_view),
+   
+   # ? work comments
+   path('works/<str:slug>/comments', comments.work_comments_view),
+   path('works/<str:slug>/comments/<int:pk>', comments.work_comment_view),
+   
 ]

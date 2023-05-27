@@ -18,7 +18,6 @@ from django.contrib.auth.models import User
 from ..serializers import WorkSerializer, CreateWorkSerializer, ChapterSerializer
 from ..services import all_works_service
 
-from user.utils import auth_check
 from ..utils import slug_generator
 
 
@@ -224,7 +223,6 @@ def chapter_view(request, slug, pk):
          'detail': 'Not found.'
          }, status=HTTP_404_NOT_FOUND)
       
-# ! /works/:slug/chapters/:id/place-edit
 # TODO: Change Place
 # * private
 @api_view([ 'PUT'])

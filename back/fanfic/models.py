@@ -127,6 +127,8 @@ class Chapter(models.Model):
 class WorkComment(models.Model):
    user = models.ForeignKey(User, on_delete=models.CASCADE)
    work = models.ForeignKey(Work, on_delete=models.CASCADE)
+   
+   parent = models.ForeignKey('self', blank=True, null=True, on_delete=models.CASCADE) 
    body = models.TextField(blank=True, max_length=1000)
    
    created = models.DateTimeField(auto_now_add=True)

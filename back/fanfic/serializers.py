@@ -1,10 +1,17 @@
-from rest_framework.serializers import ModelSerializer, PrimaryKeyRelatedField
-from .models import Tag, Fandom, Character, Pairing, Work, WorkComment, Chapter, ChapterComment
+from rest_framework.serializers import (ModelSerializer, 
+                                        PrimaryKeyRelatedField, 
+                                        CharField,
+                                        SerializerMethodField)
+
+from .models import (Tag, 
+                     Fandom, 
+                     Character, 
+                     Pairing, 
+                     Work, 
+                     WorkComment,
+                     Chapter, 
+                     ChapterComment)
 from user.serializers import UserSerializer
-from .services import (all_characters_service, 
-                       all_fandoms_service, 
-                       all_pairings_service, 
-                       all_tags_service)
 
 
 # Tag
@@ -75,7 +82,8 @@ class CreateWorkSerializer(ModelSerializer):
       fields = ('id', 'title', 'image', 'workType', 'fanfic_type', 'fandoms', 'characters',
                   'pairings', 'raiting', 'orientation', 'tags', 'description', 'notes', 'progressType', 'public',
                   'created', 'updated')
-      
+
+# Chapter
 class ChapterSerializer(ModelSerializer):
    class Meta:
       model = Chapter
@@ -84,13 +92,48 @@ class ChapterSerializer(ModelSerializer):
                  'pre_text', 'text', 'after_text','place', 
                  'public', 'created', 'updated')
 
-class WorkCommentSerializer(ModelSerializer):
+# comments for work
+class CreateWorkCommentSerializer(ModelSerializer):
    class Meta:
       model = WorkComment
-      fields = ('after_textid', 
-                'user', 'work', 
+      fields = ('id', 
+                'user', 'work', 'parent', 
                 'body', 
                 'created', 'updated')
+
+class CreateWorkCommentNotParrentSerializer(ModelSerializer):
+   parent = CharField(allow_blank=True, allow_null=True)
+   
+   class Meta:
+      model = WorkComment
+      fields = ('id', 
+                'user', 'work', 'parent', 
+                'body', 
+                'created', 'updated')
+      
+# work comments serializer
+class WorkCommentWorkSerializer(ModelSerializer):
+   class Meta:
+      model = Work
+      fields = ('id', 'title', 'slug')
+      
+# comments for work
+class WorkCommentSerializer(ModelSerializer):
+   user = UserSerializer(many=False)
+   work = WorkCommentWorkSerializer(many=False)
+   replies = SerializerMethodField()
+   
+   class Meta:
+      model = WorkComment
+      fields = ('id', 
+                'user', 'work', 'parent', 
+                'body', 'replies',
+                'created', 'updated')
+      
+   def get_replies(self, obj):
+        replies = WorkComment.objects.filter(parent=obj)
+        serializer = WorkCommentSerializer(replies, many=True)
+        return serializer.data
       
 class ChapterCommentSerializer(ModelSerializer):
    class Meta:

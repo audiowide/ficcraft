@@ -11,5 +11,9 @@ urlpatterns = [
    # profile
    path('profile/<str:username>', profile.show_profile_view),
    path('profile/<str:username>/works', profile.show_user_works_view),
+   
+   # collections
    path('profile/<str:username>/collections', profile.show_user_collections_view),
+   path('profile/<str:username>/collections/<int:pk>', profile.show_user_collection_view),
+   
 ]

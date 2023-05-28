@@ -11,6 +11,12 @@ urlpatterns = [
    # profile
    path('profile/<str:username>', profile.show_profile_view),
    path('profile/<str:username>/works', profile.show_user_works_view),
+   path('profile/<str:username>/comments', profile.show_user_comments_view),
+   
+   # DANGER ZONE 
+   path('profile/<str:username>/update-email', profile.profile_update_email_view),
+   path('profile/<str:username>/update-password', profile.profile_update_password_view),
+   path('profile/<str:username>/delete', profile.profile_delete_view),
    
    # collections
    path('profile/<str:username>/collections', profile.show_user_collections_view),

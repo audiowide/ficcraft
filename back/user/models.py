@@ -8,10 +8,9 @@ from django.contrib.auth.models import AbstractUser
 class Profile(models.Model):
    user = models.ForeignKey(User, on_delete=models.CASCADE)
    
-   image = models.ImageField(upload_to='profile/', 
-                             default='https://images.pexels.com/photos/12442760/pexels-photo-12442760.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1')
-   backImage = models.ImageField(upload_to='profile/background-image/', blank=True)
-   
+   avatar = models.ImageField(upload_to='profile/avatars', default='', blank=True)
+   background = models.FileField(upload_to='profile/background-image/',  default='', blank=True)
+      
    about = models.TextField(blank=True)
    
    lowers = models.ManyToManyField(Work, default=[])
@@ -32,9 +31,10 @@ class Collection(models.Model):
    user = models.ForeignKey(User, on_delete=models.CASCADE)
    title =  models.CharField(max_length=250)
    works = models.ManyToManyField(Work, default=[])
+   public = models.BooleanField(default=False)
    
    def __str__(self):
-      return self.user.username
+      return self.title
    
 # TODO: Chat with messages
 # class ChatMessage(models.Model):

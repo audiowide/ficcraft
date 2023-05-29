@@ -19,6 +19,7 @@ from ..serializers import WorkSerializer, CreateWorkSerializer, ChapterSerialize
 from ..services import all_works_service
 
 from ..utils import slug_generator
+from user.models import Profile
 
 
 # ! /works
@@ -79,9 +80,9 @@ def show_all_works(request):
 #       serializer.save(slug=slug_generator(serializer.validated_data['title']),
 #                         user=self.request.user)
 
-# # ! /works/:slug
-# # TODO: Show One Work
-# # * public
+# ! /works/:slug
+# TODO: Show One Work
+# * public
 @api_view(['GET', 'PUT', 'DELETE'])
 def  show_one_work(request, slug):
    try:
@@ -93,42 +94,72 @@ def  show_one_work(request, slug):
             'work': WorkSerializer(work, many=False).data
          }, status=HTTP_200_OK)
          
+      if request.user.is_authenticated:
+         if request.user == work.user:
+            if request.method == 'DELETE':
+               work.delete()
+               return Response({
+                  'message': 'Work deleted'
+               }, status=HTTP_200_OK)
+               
+            if request.method == 'PUT':
+               title = request.data.get('title')
+      
+               work.title =  title,
+               work.slug = slug_generator(title),
+               work.image = request.FILES.get('image', 'book.jpeg'),
+               work.workType =  request.data['workType'],
+               work.fanfic_type = request.data['fanfic_type'],
+                  
+               work.fandoms = request.data['fandoms'],
+               work.characters =  request.data['characters'],
+               work.pairings = request.data['pairings'],
+                  
+               work.raiting = request.data['raiting'],
+               work.orientation = request.data['orientation'],
+                  
+               work.tags = request.data['tags'],
+               work.description = request.data['description'],
+               work.notes = request.data['notes'],
+               work.progressType = request.data['progressType'],
+               work.public = request.data['public'],
+               
+               work.save()
+               
+               return Response({
+                     'work': work
+                  }, status=201)
+         
+   except:
+      # show message if work is not found
+      return Response({
+         'detail': 'Not found.'
+         }, status=HTTP_404_NOT_FOUND)
+      
+# ! /works/:slug
+# TODO: Add To Lower
+# * private
+@api_view(['POST'])
+def  add_to_lowe_one_work(request, slug):
+   try:
+      # get one work
+      work = Work.objects.get(slug=slug)
+      
+      if request.method == 'POST':
          if request.user.is_authenticated:
-            if request.user == work.user:
-               if request.method == 'DELETE':
-                  work.delete()
-                  return Response({
-                     'message': 'Work deleted'
-                  }, status=HTTP_200_OK)
-                  
-               if request.method == 'PUT':
-                  title = request.data.get('title')
-         
-                  work.title =  title,
-                  work.slug = slug_generator(title),
-                  work.image = request.FILES.get('image', 'book.jpeg'),
-                  work.workType =  request.data['workType'],
-                  work.fanfic_type = request.data['fanfic_type'],
-                     
-                  work.fandoms = request.data['fandoms'],
-                  work.characters =  request.data['characters'],
-                  work.pairings = request.data['pairings'],
-                     
-                  work.raiting = request.data['raiting'],
-                  work.orientation = request.data['orientation'],
-                     
-                  work.tags = request.data['tags'],
-                  work.description = request.data['description'],
-                  work.notes = request.data['notes'],
-                  work.progressType = request.data['progressType'],
-                  work.public = request.data['public'],
-                  
-                  work.save()
-                  
-                  return Response({
-                        'work': work
-                     }, status=201)
-         
+            profile = Profile.objects.get(user=request.user)
+            
+            if profile.lowers.filter(work=work):
+               profile.lowers.remove(work.id)
+               return Response({
+                  'message': 'Unlicked successfully'
+               }, status=HTTP_200_OK)
+            else:
+               profile.lowers.add(work.id)
+               return Response({
+                  'message': 'Liked successfully'
+               }, status=HTTP_200_OK)
+      
    except:
       # show message if work is not found
       return Response({

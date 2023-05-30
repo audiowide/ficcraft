@@ -12,6 +12,7 @@ urlpatterns = [
    path('profile/<str:username>', profile.show_profile_view),
    path('profile/<str:username>/works', profile.show_user_works_view),
    path('profile/<str:username>/comments', profile.show_user_comments_view),
+   path('profile/<str:username>/lowers', profile.show_user_lowers_view),
    
    # DANGER ZONE 
    path('profile/<str:username>/update-email', profile.profile_update_email_view),

@@ -136,7 +136,7 @@ def  show_one_work(request, slug):
          'detail': 'Not found.'
          }, status=HTTP_404_NOT_FOUND)
       
-# ! /works/:slug
+# ! /works/:slug/add-to-lower
 # TODO: Add To Lower
 # * private
 @api_view(['POST'])

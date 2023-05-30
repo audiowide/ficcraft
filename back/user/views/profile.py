@@ -208,6 +208,25 @@ def show_user_comments_view(request, username):
          'detail': 'Not found.'
          }, status=HTTP_404_NOT_FOUND)
       
+# ! /profile/:username/lowers
+# TODO: Show All Lowers
+# *  public
+@api_view(['GET'])
+def show_user_lowers_view(request, username):
+   try:
+      user = User.objects.get(username=username)
+      profile = Profile.objects.get(user=user)
+      
+      if request.method == 'GET':
+         return Response({
+           'lowers': profile.lowers.all()
+         }, status=HTTP_200_OK)
+       
+   except:
+      return Response({
+         'detail': 'Not found.'
+         }, status=HTTP_404_NOT_FOUND)
+      
 # ! /profile/:username/delete
 # TODO: Delete Account
 # *  private

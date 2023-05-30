@@ -12,21 +12,25 @@ urlpatterns = [
    # ?  fandoms
    path('fandoms', categories.FandomListCreateView.as_view()),
    path('fandoms/<int:pk>/', categories.FandomDetailView.as_view()),
+   path('fandoms/<int:pk>/add-to-lower', categories.add_fandom_to_bookmark),
    
     # ?  characters
    path('characters', categories.CharacterListCreateView.as_view()),
    path('characters/<int:pk>/', categories.CharacterDetailView.as_view()),
+   path('characters/<int:pk>/add-to-lower', categories.add_characters_to_bookmark),
    
    # ?  pairings
    path('pairings', categories.PairingListCreateView.as_view()),
    path('pairings/<int:pk>/', categories.PairingDetailView.as_view()),
+   path('pairings/<str:slug>/add-to-lower', categories.add_pairings_to_bookmark),
    
    # ? works
    path('works', works.show_all_works),
    # path('works', works.WorkCreateView.as_view()),
    path('works/<str:slug>/', works.show_one_work),
+   path('works/<str:slug>/add-to-lower', works.add_to_lowe_one_work),
    # path('works/<str:slug>/', works.WorksDetailView.as_view()),
-   
+
    # ? chapters
    path('works/<str:slug>/chapters', works.chapters_view),
    path('works/<str:slug>/chapters/<int:pk>', works.chapter_view),

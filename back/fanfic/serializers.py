@@ -20,6 +20,7 @@ class TagSerializer(ModelSerializer):
       model = Tag
       fields = ('id' ,'name', 'description', )
       
+      
 # Fandom
 class FandomSerializer(ModelSerializer):
    class Meta:

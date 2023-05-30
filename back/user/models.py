@@ -1,6 +1,6 @@
 from django.db import models
 
-from fanfic.models import Work, Chapter
+from fanfic.models import Work, Chapter, Fandom, Pairing, Character
 from django.contrib.auth.models import User
 from django.contrib.auth.models import AbstractUser
 
@@ -15,6 +15,11 @@ class Profile(models.Model):
    
    lowers = models.ManyToManyField(Work, default=[])
    bookmarks = models.ManyToManyField(Chapter, default=[])
+   
+   fandom_bookmarks = models.ManyToManyField(Fandom, default=[])
+   pairing_bookmarks = models.ManyToManyField(Pairing, default=[])
+   character_bookmarks = models.ManyToManyField(Character, default=[])
+   
    # chats = models.ManyToManyField('Chat', default=[])
    # users = models.ManyToManyField(User, default=[])
    

@@ -1,4 +1,5 @@
 from rest_framework.decorators import api_view
+from rest_framework.response import Response
 from rest_framework.generics import (ListCreateAPIView,
                                      RetrieveUpdateDestroyAPIView,
                                      CreateAPIView, 
@@ -20,6 +21,8 @@ from ..services import (all_tags_service,
                         all_characters_service, 
                         all_pairings_service)
 
+from ..models import (Work)
+
 from ..models import (Fandom, Character, Pairing)
 
 
@@ -39,6 +42,15 @@ class TagDetailView(RetrieveUpdateDestroyAPIView):
    serializer_class = TagSerializer
    permission_classes =  [CreateOnlyPermission]
    
+   def retrieve(self, request, *args, **kwargs):
+      instance = self.get_object()
+      serializer = self.get_serializer(instance)
+      works =  Work.objects.filter(tags=instance)
+      works_serializer = WorkSerializer(works, many=True)
+      serialized_data = serializer.data
+      serialized_data['works'] = works_serializer.data
+      return Response(serialized_data)
+      
 # ! /fandoms
 # TODO: Show All and Create
 # * public(show all), private(create)
@@ -55,10 +67,20 @@ class FandomDetailView(RetrieveUpdateDestroyAPIView):
    serializer_class = FandomSerializer
    permission_classes =  [CreateOnlyPermission]
    
-   def get_queryset(self):
-      fandom_slug = self.kwargs['fandom_slug']
-      queryset = Fandom.objects.filter(tags__name=tag_name)
-      return queryset
+   def get_serializer_class(self):
+      if self.request.method == 'PUT':
+         return  CreateCharacterSerializer
+      return super().get_serializer_class()
+   
+   def retrieve(self, request, *args, **kwargs):
+      instance = self.get_object()
+      serializer = self.get_serializer(instance)
+      print(instance)
+      works =  Work.objects.filter(fandoms=instance)
+      works_serializer = WorkSerializer(works, many=True)
+      serialized_data = serializer.data
+      serialized_data['works'] = works_serializer.data
+      return Response(serialized_data)
    
 # ! /fandoms/:id/add-to-lower
 # TODO: Add Fandom To Lower
@@ -118,6 +140,15 @@ class CharacterDetailView(RetrieveUpdateDestroyAPIView):
          return  CreateCharacterSerializer
       return super().get_serializer_class()
    
+   def retrieve(self, request, *args, **kwargs):
+      instance = self.get_object()
+      serializer = self.get_serializer(instance)
+      works =  Work.objects.filter(characters=instance)
+      works_serializer = WorkSerializer(works, many=True)
+      serialized_data = serializer.data
+      serialized_data['works'] = works_serializer.data
+      return Response(serialized_data)
+   
 # ! /characters/:id/add-to-lower
 # TODO: Add Characters To Lower
 # * private
@@ -175,6 +206,15 @@ class PairingDetailView(RetrieveUpdateDestroyAPIView):
       if self.request.method == 'PUT':
          return  CreatePairingSerializer
       return super().get_serializer_class()
+   
+   def retrieve(self, request, *args, **kwargs):
+      instance = self.get_object()
+      serializer = self.get_serializer(instance)
+      works =  Work.objects.filter(pairings=instance)
+      works_serializer = WorkSerializer(works, many=True)
+      serialized_data = serializer.data
+      serialized_data['works'] = works_serializer.data
+      return Response(serialized_data)
    
 # ! /pairings/:id/add-to-lower
 # TODO: Add Pairing To Lower

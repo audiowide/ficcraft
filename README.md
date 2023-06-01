@@ -17,10 +17,10 @@
 ## Profile
 
 - [ ]  **profile**
-    - [ ]  info about profile
-    - [ ]  my works
-    - [ ]  collections
-    - [ ]  comments (for works and chapter)
+    - [x]  info about profile
+    - [x]  my works
+    - [x]  collections
+    - [x]  comments (for works and chapter)
     - [ ]  lowers(only for user)
     - [ ]  bookmarks(only for user)
     - [ ]  subcribed
@@ -39,11 +39,11 @@
         - [ ]  delete chat
         - [ ]  block user with chat
         - [ ]  all blocked users
-- [ ]  **update profile**
-    - [ ]  update all info
-    - [ ]  update email
-    - [ ]  update password
-    - [ ]  delete account
+- [x]  **update profile**
+    - [x]  update all info
+    - [x]  update email
+    - [x]  update password
+    - [x]  delete account
 
 ## Categories
 
@@ -55,48 +55,47 @@
 - [ ]  **Fandom**
     - [x]  add new fandom
     - [x]  show all fandoms
-    - [ ]  add to bookmark
+    - [x]  add to bookmark
     - [ ]  show one fandom with all works and paginator and filters
     - [x]  update fandom
     - [x]  remove fandom
 - [ ]  **Character**
     - [x]  add new character
     - [x]  show all
-    - [ ]  add to bookmark
+    - [x]  add to bookmark
     - [ ]  show one with all works and paginator and filters
     - [x]  remove
     - [x]  update
 - [ ]  **Pairing**
-    - [ ]  add new pairing
-    - [ ]  show all parings
-    - [ ]  add to bookmark
+    - [x]  add new pairing
+    - [x]  show all parings
+    - [x]  add to bookmark
     - [ ]  show one pairing with all works and paginator and filters
-    - [ ]  remove
+    - [x]  remove
 
 ## Work
 
-- [ ]  **Add new work**
-    - [ ]  public rools
+- [x]  **Add new work**
+    - [x]  public rools
 - [ ]  show all works with filters and pagination
 - [ ]  add to lower
-- [ ]  delete
+- [x]  delete
 - [ ]  **update**
-    - [ ]  update info
+    - [x]  update info
     - [ ]  show all comments(filter)
     - [ ]  all statistic(comments count, views, bookmarks, lowers)
-- [ ]  **show one work**
-    - [ ]  show all chapters
-    - [ ]  **show one chapter**
+- [x]  **show one work**
+    - [x]  show all chapters
+    - [x]  **show one chapter**
         - [ ]  add new comment
         - [ ]  remove comment
-        - [ ]  add to bookmark
-    - [ ]  add new chapter
-    - [ ]  add to lowers
-    - [ ]  add comment
-    - [ ]  remove comment
+    - [x]  add new chapter
+    - [x]  add to lowers
+    - [x]  add comment
+    - [x]  remove comment
     - [ ]  **update chapter**
-        - [ ]  update info
-        - [ ]  show all comments
+        - [x]  update info
+        - [x]  show all comments
         - [ ]  views, all comments, likes
     
 
